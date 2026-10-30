@@ -16,10 +16,13 @@ The admin user does not exist by default: open the Register page and create one 
 
 ## 2. Live deployed links
 
-> Fill these two URLs in after deployment (Render/Heroku for the API, Vercel/Netlify for the front-end).
+- Front-end (public website, GitHub Pages): https://zhangzining663.github.io/portfolio-capstone/
+- Back-end (REST API, Render free instance): https://portfolio-capstone.onrender.com
 
-- Front-end (public website): `[paste your deployed Vercel / Netlify URL here]`
-- Back-end (API): `[paste your deployed Render / Heroku URL here]`
+Sample public endpoints you can open directly:
+
+- Projects list: https://portfolio-capstone.onrender.com/api/projects
+- Blog list: https://portfolio-capstone.onrender.com/api/blog
 
 ## 3. Tech stack
 
@@ -159,8 +162,8 @@ Base URL locally: `http://localhost:5000`. Protected routes require the `Authori
 
 ## 8. Deployment notes
 
-- **API (Render / Heroku):** set `MONGODB_URI`, `JWT_SECRET` and `CLIENT_URL` as environment variables in the host dashboard; start command is `node server.js`. CORS in `server.js` allows the front-end origin set by `CLIENT_URL`.
-- **Front-end (Vercel / Netlify):** build command `npm run build`, publish the `dist` folder; add `VITE_API_URL` as an environment variable equal to the deployed API URL. After deploy, the live site must call the deployed API instead of `localhost`.
+- **API (Render, free web service):** repository root directory is set to `server`; build command `npm install`, start command `npm start`. Environment variables set in the Render dashboard: `MONGODB_URI`, `JWT_SECRET` (`CLIENT_URL` is optional; when unset CORS falls back to `*`). Render injects `PORT`, and `server.js` reads `process.env.PORT || 5000`.
+- **Front-end (GitHub Pages):** `npm run build` produces the static `dist` folder; its contents are published from the `gh-pages` branch at the repository root. `client/.env.production` sets `VITE_API_URL` to the Render URL at build time, and `client/vercel.json` style SPA rewrite (`dist/404.html` copied from `index.html`) keeps client-side routing working on page refresh. The deployed site base path is `/portfolio-capstone/`, configured in `vite.config.js` and the React Router `basename`.
 
 ## 9. Error handling & security notes
 
